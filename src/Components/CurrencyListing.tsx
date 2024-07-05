@@ -133,6 +133,9 @@ const CurrencyListing: React.FC = (): JSX.Element => {
       <div className="table-heading">
         <p>Currency List</p>
         <div className="actions-buttons">
+          <button onClick={() => reloadCallback()} className="action-button">
+            Refresh
+          </button>
           {/* Sorting Option */}
 
           <select

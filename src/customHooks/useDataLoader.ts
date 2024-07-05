@@ -18,7 +18,7 @@ interface UseDataLoaderResult<T> {
 const useDataLoader = <T>(
   fetchApiCall: (s: AbortSignal) => Promise<T>,
   isAutoRefresh = false,
-  refreshTime = 1000000,
+  refreshTime = 10000,
   page = 1,
 ): UseDataLoaderResult<T> => {
   const [data, setData] = useState<T | null>(null);
@@ -29,6 +29,11 @@ const useDataLoader = <T>(
 
   const fetchData = async (isRefresh = false) => {
     try {
+      // abort previous request
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
+      console.log(isRefresh);
       if (!isRefresh) {
         setLoading(true);
       }
@@ -36,6 +41,7 @@ const useDataLoader = <T>(
       const signal = controllerRef.current.signal;
       const responseData = await fetchApiCall(signal);
       setData(responseData);
+      setError("");
       setLoading(false);
       if (isAutoRefresh && !refreshTimer.current) {
         refreshTimer.current = setInterval(() => {
@@ -50,7 +56,7 @@ const useDataLoader = <T>(
   useEffect(() => {
     fetchData();
     return () => {
-      if (!refreshTimer.current) {
+      if (refreshTimer.current) {
         clearInterval(refreshTimer.current ?? 0);
         refreshTimer.current = null;
       }
