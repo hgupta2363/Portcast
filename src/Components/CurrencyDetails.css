@@ -1,0 +1,23 @@
+.currency-details-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgb(197 186 186 / 10%);
+    padding: 16px;
+    width: 500px;
+  }
+  .cacurrency-details-cardrd h3 {
+    margin: 0 0 8px;
+  }
+  
+  .currency-details-card p {
+    margin: 4px 0;
+  }
+  
+  .black-button{
+    padding: 7px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
